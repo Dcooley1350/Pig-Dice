@@ -55,7 +55,6 @@ var player2 = new Player();
 
 $(document).ready(function(event) {
   $("#choose-game-type").click(function(event) {
-    console.log(event.target.name);
     if (event.target.name === "2Players") {
       $("#choose-game-type").hide();
       $(".player1, .player2").show();
@@ -99,7 +98,7 @@ $(document).ready(function(event) {
       $(".winner").html("The winner is" + player1.name);
       $(".winner").show();
     } else {
-      $("#gamesscore-player1").html("<h2>" + player1.gameScore + "</h2>");
+      $("#gamesscore-player1").html(player1.gameScore);
       $(".game-player1 button").hide();
       $(".game-player2 button").show();
     }
@@ -120,7 +119,7 @@ $(document).ready(function(event) {
       $(".winner").html("The winner is" + player2.name);
       $(".winner").show();
     } else {
-      $("#gamesscore-player2").html("<h2>" + player2.gameScore + "</h2>");
+      $("#gamesscore-player2").html(player2.gameScore);
       $(".game-player2 button").hide();
       $(".game-player1 button").show();
     }
