@@ -7,6 +7,15 @@ var Player = function() {
   this.gameWins = 0;
 }
 
+Player.prototype.addName = function(name){
+  if(name){
+    this.name = name;
+    return this.name;
+  }else{
+    return this.name;
+  }
+}
+
 Player.prototype.hold = function() {
   this.gameScore += this.turnScore;
   this.turnScore = 0;
@@ -47,7 +56,9 @@ function dicePic(randomNumber) {
 }
 //Front End Logic for Gameplay
 var player1 = new Player();
+player1.addName("Player 1");
 var player2 = new Player();
+player2.addName("Player 2");
 
 //Choose Game Type and Enter Name Functions
 
@@ -57,14 +68,14 @@ $(document).ready(function(event) {
       $("#choose-game-type").hide();
       $(".player1, .player2").show();
     } else if (event.target.name === "cpu") {
-      player2.name = "cpu";
+      player2.addName("cpu");
       $("#choose-game-type").hide();
       $(".player1").show();
     }
   });
   $("button[name=play]").click(function(event) {
     $(".name").hide();
-    player1.name = $("#player1").val();
+    player1.addName($("#player1").val());
     if (player2.name === "cpu") {
       $("#player1name").html(player1.name);
       $("#player2name").html(player2.name);
@@ -72,7 +83,7 @@ $(document).ready(function(event) {
       $(".gameplay").show();
       $(".game-player2 button").hide();
     } else {
-      player2.name = $("#player2").val();
+      player2.addName($("#player2").val());
       $("#player1name").html(player1.name);
       $("#player2name").html(player2.name);
       $(".gameplay").show();
