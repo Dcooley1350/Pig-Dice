@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <title></title>
+  </head>
+  <body class="container">
+    <div class="jumbotron">
+      <h1> Welcome to Epicodus Credit Union!</h1>
+    </div>
+    <div class="form-group">
+      <form id="new-account">
+        <label for="new-owner">Account Name</label>
+        <input type="text"  class="form-control" id="new-owner">
+        <label for="initial-deposit">Initial Deposit</label>
+        <input type="number"  class="form-control" id="initial-deposit">
+        <button type="submit" name="button">Submit</button>
+      </form>
+    </div>
+    <div class="form-group">
+      <form id="deposit-withdraw">
+        <div class="alert alert-success">
+          <p>Signed in as:  <span id="alert-owner"></span></p>
+        </div>
+        <label for="deposit">Deposit</label>
+        <input type="number"  class="form-control" id="deposit">
+        <label for="withdraw">Withdraw</label>
+        <input type="number"  class="form-control" id="withdraw">
+        <button type="submit" name="button">Submit</button>
+      </form>
+    </div>
+    <div id="balance">
+      <p></p>
+    </div>
+    </div>
+  </body>
+</html>
