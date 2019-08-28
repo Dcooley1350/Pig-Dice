@@ -43,11 +43,7 @@ function randomDiceNumber() {
 //Front End Logic for Dice game
 
 function dicePic(randomNumber) {
-  if (randomNumber <= 6 && randomNumber >= 1) {
-    return "../img/" + randomNumber + ".png";
-  } else {
-    return "Error";
-  }
+  return "img/" + randomNumber + ".png";
 }
 //Front End Logic for Gameplay
 var player1 = new Player();
@@ -60,7 +56,6 @@ $(document).ready(function(event) {
       $(".player1, .player2").show();
     } else if (event.target.name === "cpu") {
       player2.name = "cpu";
-      console.log("I'm in")
       $("#choose-game-type").hide();
       $(".player1").show();
     }
@@ -73,7 +68,8 @@ $(document).ready(function(event) {
       $("#player2name").html(player2.name);
       $("div.name").hide();
       $(".gameplay").show();
-      $("button[name=player2roll]").hide();
+      $(".game-player2 button").hide();
+      // $("button[name=player2roll]").hide();
     } else {
       player2.name = $("#player2").val();
       $("#player1name").html(player1.name);
@@ -86,19 +82,25 @@ $(document).ready(function(event) {
   $("button[name=player1roll]").click(function(event) {
     var randomNum = randomDiceNumber();
     if (randomNum === 1) {
+      player1.turnScore = 0;
+      $("#turnScore").text(0);
       $(".game-player1 button").hide();
       $(".game-player2 button").show();
     } else {
       player1.roll(randomNum);
+      $(".game-player1 img").attr("src", dicePic(randomNum));
+      $("#turnScore").html(player1.turnScore);
     }
   });
   $("button[name=player1hold]").click(function(event) {
     player1.hold();
+    $("#turnScore").text(0);
     if (player1.gameScore >= 100) {
-      $(".winner").html("The winner is" + player1.name);
+      $(".winner").html("<h1>The winner is" + player1.name +"</h1>");
       $(".winner").show();
     } else {
-      $("#gamesscore-player1").html(player1.gameScore);
+      console.log(player1.gameScore);
+      $("#gamesscore-player1").text(player1.gameScore);
       $(".game-player1 button").hide();
       $(".game-player2 button").show();
     }
@@ -107,19 +109,25 @@ $(document).ready(function(event) {
   $("button[name=player2roll]").click(function(event) {
     var randomNum = randomDiceNumber();
     if (randomNum === 1) {
+      player2.turnScore = 0;
+      $("#turnScore").html(0);
       $(".game-player2 button").hide();
       $(".game-player1 button").show();
     } else {
       player2.roll(randomNum);
+      $(".game-player2 img").attr("src", dicePic(randomNum));
+      $("#turnScore").text(player2.turnScore);
     }
   });
   $("button[name=player2hold]").click(function(event) {
     player2.hold();
+    $("#turnScore").text(0);
     if (player2.gameScore >= 100) {
-      $(".winner").html("The winner is" + player2.name);
+      $(".winner").html("<h1>The winner is " + player2.name + "</h1>");
       $(".winner").show();
     } else {
-      $("#gamesscore-player2").html(player2.gameScore);
+      console.log(player1.gameScore);
+      $("#gamesscore-player2").text(player2.gameScore);
       $(".game-player2 button").hide();
       $(".game-player1 button").show();
     }
