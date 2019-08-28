@@ -6,23 +6,22 @@
   <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
-  <title></title>
+  <title>Game of Pig Dice</title>
 </head>
 
 <body class="container">
   <div class="jumbotron">
     <h1> Welcome to Pig Dice!</h1>
   </div>
+  <div class="winner">
+
+  </div>
   <div id="choose-game-type">
     <button type="button" class="btn btn-success" name="2Players">2 Players</button>
     <button type="button" class="btn btn-success" name="cpu">Player 1 vs. CPU</button>
   </div>
 
-
-
   <div class="name">
-
-
     <div class="player1">
       <label for="player1">Name Player 1:</label>
       <input type="text" class="form-control" id="player1">
@@ -37,7 +36,6 @@
 
   <div class="gameplay">
     <h2>Turn Score: <span id="turnScore"></span></h2>
-
     <div class="row">
       <div class="col-md-6 game-player1">
         <h1 id="player1name"></h1>
@@ -55,14 +53,5 @@
       </div>
     </div>
   </div>
-
-  <div class="winner">
-
-  </div>
-  </div>
-  </div>
-
-  </div>
 </body>
-
 </html>

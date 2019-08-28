@@ -49,6 +49,8 @@ function dicePic(randomNumber) {
 var player1 = new Player();
 var player2 = new Player();
 
+//Choose Game Type and Enter Name Functions
+
 $(document).ready(function(event) {
   $("#choose-game-type").click(function(event) {
     if (event.target.name === "2Players") {
@@ -69,7 +71,6 @@ $(document).ready(function(event) {
       $("div.name").hide();
       $(".gameplay").show();
       $(".game-player2 button").hide();
-      // $("button[name=player2roll]").hide();
     } else {
       player2.name = $("#player2").val();
       $("#player1name").html(player1.name);
@@ -79,6 +80,11 @@ $(document).ready(function(event) {
     }
 
   });
+
+//GAMEPLAY Functions
+
+  //Click Functions for Player 1
+
   $("button[name=player1roll]").click(function(event) {
     var randomNum = randomDiceNumber();
     if (randomNum === 1) {
@@ -96,8 +102,10 @@ $(document).ready(function(event) {
     player1.hold();
     $("#turnScore").text(0);
     if (player1.gameScore >= 100) {
-      $(".winner").html("<h1>The winner is" + player1.name +"</h1>");
+      $(".winner").html("<h1>The winner is" + player1.name +"!</h1>");
       $(".winner").show();
+      $("#turnScore").hide();
+      alert("Nice Game! You Win!");
     } else {
       console.log(player1.gameScore);
       $("#gamesscore-player1").text(player1.gameScore);
@@ -106,6 +114,9 @@ $(document).ready(function(event) {
     }
 
   });
+
+  //Click Functions for Player 2
+
   $("button[name=player2roll]").click(function(event) {
     var randomNum = randomDiceNumber();
     if (randomNum === 1) {
@@ -119,12 +130,15 @@ $(document).ready(function(event) {
       $("#turnScore").text(player2.turnScore);
     }
   });
+
   $("button[name=player2hold]").click(function(event) {
     player2.hold();
     $("#turnScore").text(0);
     if (player2.gameScore >= 100) {
-      $(".winner").html("<h1>The winner is " + player2.name + "</h1>");
+      $(".winner").html("<h1>The winner is " + player2.name + "!</h1>");
       $(".winner").show();
+      $("#turnScore").hide();
+      alert("Nice Game! You Win!");
     } else {
       console.log(player1.gameScore);
       $("#gamesscore-player2").text(player2.gameScore);
