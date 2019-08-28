@@ -17,3 +17,7 @@ span, button{
 .gameplay{
   display: none;
 }
+
+.winner{
+  display: none;
+}
