@@ -92,12 +92,13 @@ $(document).ready(function(event) {
 
   });
 
-//GAMEPLAY Functions
+  //GAMEPLAY Functions
 
   //Click Functions for Player 1
 
   $("button[name=player1roll]").click(function(event) {
     var randomNum = randomDiceNumber();
+    $(".game-player1 img").attr("src", dicePic(randomNum));
     if (randomNum === 1) {
       player1.turnScore = 0;
       $("#turnScore").text(0);
@@ -105,7 +106,6 @@ $(document).ready(function(event) {
       $(".game-player2 button").show();
     } else {
       player1.roll(randomNum);
-      $(".game-player1 img").attr("src", dicePic(randomNum));
       $("#turnScore").html(player1.turnScore);
     }
   });
@@ -113,7 +113,7 @@ $(document).ready(function(event) {
     player1.hold();
     $("#turnScore").text(0);
     if (player1.gameScore >= 100) {
-      $(".winner").html("<h1>The winner is" + player1.name +"!</h1>");
+      $(".winner").html("<h1>The winner is" + player1.name + "!</h1>");
       $(".winner").show();
       $("#turnScore").hide();
       alert("Nice Game! You Win!");
@@ -130,6 +130,7 @@ $(document).ready(function(event) {
 
   $("button[name=player2roll]").click(function(event) {
     var randomNum = randomDiceNumber();
+    $(".game-player2 img").attr("src", dicePic(randomNum));
     if (randomNum === 1) {
       player2.turnScore = 0;
       $("#turnScore").html(0);
@@ -137,7 +138,6 @@ $(document).ready(function(event) {
       $(".game-player1 button").show();
     } else {
       player2.roll(randomNum);
-      $(".game-player2 img").attr("src", dicePic(randomNum));
       $("#turnScore").text(player2.turnScore);
     }
   });
