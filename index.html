@@ -1,40 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-    <script type="text/javascript" src="js/scripts.js"></script>
-    <title></title>
-  </head>
-  <body class="container">
-    <div class="jumbotron">
-      <h1> Welcome to Epicodus Credit Union!</h1>
+
+<head>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <title></title>
+</head>
+
+<body class="container">
+  <div class="jumbotron">
+    <h1> Welcome to Pig Dice!</h1>
+  </div>
+  <div id="choose-game-type">
+    <button type="button" class="btn btn-success" name="2Players">2 Players</button>
+    <button type="button" class="btn btn-success" name="cpu">Player 1 vs. CPU</button>
+  </div>
+
+
+
+  <div class="name">
+
+
+    <div class="player1">
+      <label for="player1">Name Player 1:</label>
+      <input type="text" class="form-control" id="player1">
+
+      <div class="player2">
+        <label for="player2">New Player 2:</label>
+        <input type="text" class="form-control" id="player2">
+      </div>
+      <button type="button" class="btn btn-success player1" name="play">Let's Play!</button>
     </div>
-    <div class="form-group">
-      <form id="new-account">
-        <label for="new-owner">Account Name</label>
-        <input type="text"  class="form-control" id="new-owner">
-        <label for="initial-deposit">Initial Deposit</label>
-        <input type="number"  class="form-control" id="initial-deposit">
-        <button type="submit" name="button">Submit</button>
-      </form>
+  </div>
+
+  <div class="gameplay">
+    <div class="row">
+      <div class="col-md-6" class="game-player1">
+        <h1 id="player1name"></h1>
+        <img src="img/1.png" alt="1">
+        <button type="button" class="btn btn-success" name="player1roll">Roll!</button>
+        <button type="button" class="btn btn-success" name="player1Hold">Hold!</button>
+      </div>
+      <div class="col-md-6" class="game-player2">
+        <h1 id="player2name"></h1>
+        <img src="img/1.png" alt="1">
+        <button type="button" class="btn btn-success" name="player2roll">Roll!</button>
+        <button type="button" class="btn btn-success" name="player2Hold">Hold!</button>
+      </div>
     </div>
-    <div class="form-group">
-      <form id="deposit-withdraw">
-        <div class="alert alert-success">
-          <p>Signed in as:  <span id="alert-owner"></span></p>
-        </div>
-        <label for="deposit">Deposit</label>
-        <input type="number"  class="form-control" id="deposit">
-        <label for="withdraw">Withdraw</label>
-        <input type="number"  class="form-control" id="withdraw">
-        <button type="submit" name="button">Submit</button>
-      </form>
-    </div>
-    <div id="balance">
-      <p></p>
-    </div>
-    </div>
-  </body>
+    <p></p>
+  </div>
+  </div>
+
+  </div>
+</body>
+
 </html>
