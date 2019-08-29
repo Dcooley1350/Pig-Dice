@@ -5,6 +5,7 @@ var Player = function() {
   this.turnScore = 0;
   this.gameScore = 0;
   this.gameWins = 0;
+  this.playerNumber=0;
 }
 
 Player.prototype.addName = function(name){
@@ -36,6 +37,35 @@ Player.prototype.win = function() {
 }
 //Business Logic for CPU
 
+function rollAction(currentTurnPlayer, otherPlayer){
+  var randomNum = randomDiceNumber();
+  $(".game-player"+currentTurnPlayer.playerNumber+ " img").attr("src", dicePic(randomNum));
+  if (randomNum === 1) {
+    currentTurnPlayer.turnScore = 0;
+    $("#turnScore").html(0);
+    $(".game-player"+currentTurnPlayer.playerNumber+" button").hide();
+    $(".game-player" + otherPlayer.playerNumber +" button").show();
+  } else {
+    currentTurnPlayer.roll(randomNum);
+    $("#turnScore").text(currentTurnPlayer.turnScore);
+  }
+}
+
+function holdAction(currentTurnPlayer, otherPlayer){
+  currentTurnPlayer.hold();
+  $("#turnScore").text(0);
+  if (currentTurnPlayer.gameScore >= 100) {
+    $(".winner").html("<h1>The winner is" + currentTurnPlayer.name + "!</h1>");
+    $(".winner").show();
+    $("#turnScore").hide();
+    alert("Nice Game! You Win!");
+  } else {
+    $("#gamesscore-player"+currentTurnPlayer.playerNumber).text(currentTurnPlayer.gameScore);
+    $(".game-player" +currentTurnPlayer.playerNumber+" button").hide();
+    $(".game-player" + otherPlayer.playerNumber +" button").show();
+  }
+}
+
 function cpu(randomNumber, player1, computer) {
   var player1Score = player1.gameScore;
   var computerTurnScore = computer.turnScore;
@@ -57,8 +87,10 @@ function dicePic(randomNumber) {
 //Front End Logic for Gameplay
 var player1 = new Player();
 player1.addName("Player 1");
+player1.playerNumber =1;
 var player2 = new Player();
 player2.addName("Player 2");
+player2.playerNumber =2;
 
 //Choose Game Type and Enter Name Functions
 
@@ -97,64 +129,20 @@ $(document).ready(function(event) {
   //Click Functions for Player 1
 
   $("button[name=player1roll]").click(function(event) {
-    var randomNum = randomDiceNumber();
-    $(".game-player1 img").attr("src", dicePic(randomNum));
-    if (randomNum === 1) {
-      player1.turnScore = 0;
-      $("#turnScore").text(0);
-      $(".game-player1 button").hide();
-      $(".game-player2 button").show();
-    } else {
-      player1.roll(randomNum);
-      $("#turnScore").html(player1.turnScore);
-    }
+    rollAction(player1, player2);
   });
   $("button[name=player1hold]").click(function(event) {
-    player1.hold();
-    $("#turnScore").text(0);
-    if (player1.gameScore >= 100) {
-      $(".winner").html("<h1>The winner is" + player1.name + "!</h1>");
-      $(".winner").show();
-      $("#turnScore").hide();
-      alert("Nice Game! You Win!");
-    } else {
-      console.log(player1.gameScore);
-      $("#gamesscore-player1").text(player1.gameScore);
-      $(".game-player1 button").hide();
-      $(".game-player2 button").show();
-    }
+    holdAction(player1, player2);
 
   });
 
   //Click Functions for Player 2
 
   $("button[name=player2roll]").click(function(event) {
-    var randomNum = randomDiceNumber();
-    $(".game-player2 img").attr("src", dicePic(randomNum));
-    if (randomNum === 1) {
-      player2.turnScore = 0;
-      $("#turnScore").html(0);
-      $(".game-player2 button").hide();
-      $(".game-player1 button").show();
-    } else {
-      player2.roll(randomNum);
-      $("#turnScore").text(player2.turnScore);
-    }
+    rollAction(player2, player1);
   });
 
   $("button[name=player2hold]").click(function(event) {
-    player2.hold();
-    $("#turnScore").text(0);
-    if (player2.gameScore >= 100) {
-      $(".winner").html("<h1>The winner is " + player2.name + "!</h1>");
-      $(".winner").show();
-      $("#turnScore").hide();
-      alert("Nice Game! You Win!");
-    } else {
-      console.log(player1.gameScore);
-      $("#gamesscore-player2").text(player2.gameScore);
-      $(".game-player2 button").hide();
-      $(".game-player1 button").show();
-    }
+    holdAction(player2, player1);
   });
 });
