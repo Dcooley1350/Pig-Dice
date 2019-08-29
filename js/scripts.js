@@ -5,14 +5,15 @@ var Player = function() {
   this.turnScore = 0;
   this.gameScore = 0;
   this.gameWins = 0;
-  this.playerNumber=0;
+  this.playerNumber = 0;
+  this.playerTurn = false;
 }
 
-Player.prototype.addName = function(name){
-  if(name){
+Player.prototype.addName = function(name) {
+  if (name) {
     this.name = name;
     return this.name;
-  }else{
+  } else {
     return this.name;
   }
 }
@@ -37,21 +38,24 @@ Player.prototype.win = function() {
 }
 //Business Logic for CPU
 
-function rollAction(currentTurnPlayer, otherPlayer){
+function rollAction(currentTurnPlayer, otherPlayer) {
   var randomNum = randomDiceNumber();
-  $(".game-player"+currentTurnPlayer.playerNumber+ " img").attr("src", dicePic(randomNum));
+  console.log(randomNum);
+  $(".game-player" + currentTurnPlayer.playerNumber + " img").attr("src", dicePic(randomNum));
   if (randomNum === 1) {
+    currentTurnPlayer.playerTurn = false;
     currentTurnPlayer.turnScore = 0;
     $("#turnScore").html(0);
-    $(".game-player"+currentTurnPlayer.playerNumber+" button").hide();
-    $(".game-player" + otherPlayer.playerNumber +" button").show();
+    $(".game-player" + currentTurnPlayer.playerNumber + " button").hide();
+    $(".game-player" + otherPlayer.playerNumber + " button").show();
   } else {
     currentTurnPlayer.roll(randomNum);
     $("#turnScore").text(currentTurnPlayer.turnScore);
+    console.log(currentTurnPlayer.turnScore);
   }
 }
 
-function holdAction(currentTurnPlayer, otherPlayer){
+function holdAction(currentTurnPlayer, otherPlayer) {
   currentTurnPlayer.hold();
   $("#turnScore").text(0);
   if (currentTurnPlayer.gameScore >= 100) {
@@ -60,16 +64,41 @@ function holdAction(currentTurnPlayer, otherPlayer){
     $("#turnScore").hide();
     alert("Nice Game! You Win!");
   } else {
-    $("#gamesscore-player"+currentTurnPlayer.playerNumber).text(currentTurnPlayer.gameScore);
-    $(".game-player" +currentTurnPlayer.playerNumber+" button").hide();
-    $(".game-player" + otherPlayer.playerNumber +" button").show();
+    $("#gamesscore-player" + currentTurnPlayer.playerNumber).text(currentTurnPlayer.gameScore);
+    $(".game-player" + currentTurnPlayer.playerNumber + " button").hide();
+    $(".game-player" + otherPlayer.playerNumber + " button").show();
   }
 }
 
-function cpu(randomNumber, player1, computer) {
+function cpu(player1, computer) {
   var player1Score = player1.gameScore;
   var computerTurnScore = computer.turnScore;
   var computerTotalScore = computer.gameScore;
+  var turn = computer.playerTurn;
+  turn = true;
+
+  if ((player1Score - computerTotalScore) > 30) {
+    while (computerTurnScore < 30 && turn) {
+      setTimeout(function() {
+        rollAction(player2, player1);
+      }, 1000);
+    }
+    holdAction(player2, player1);
+  } else if ((player1Score - computerTotalScore) < 0) {
+    while (computerTurnScore < 15 && turn) {
+      setTimeout(function() {
+        rollAction(player2, player1);
+      }, 1000);
+    }
+    holdAction(player2, player1);
+  } else {
+    while (computerTurnScore < 20 && turn) {
+      setTimeout(function() {
+        rollAction(player2, player1);
+      }, 1000);
+    }
+    holdAction(player2, player1);
+  }
 }
 
 //Business Logic for Dice Roll
@@ -87,10 +116,10 @@ function dicePic(randomNumber) {
 //Front End Logic for Gameplay
 var player1 = new Player();
 player1.addName("Player 1");
-player1.playerNumber =1;
+player1.playerNumber = 1;
 var player2 = new Player();
 player2.addName("Player 2");
-player2.playerNumber =2;
+player2.playerNumber = 2;
 
 //Choose Game Type and Enter Name Functions
 
@@ -124,6 +153,8 @@ $(document).ready(function(event) {
 
   });
 
+
+
   //GAMEPLAY Functions
 
   //Click Functions for Player 1
@@ -133,6 +164,9 @@ $(document).ready(function(event) {
   });
   $("button[name=player1hold]").click(function(event) {
     holdAction(player1, player2);
+    if (player2.name === "cpu") {
+      cpu(player2, player1);
+    }
 
   });
 
