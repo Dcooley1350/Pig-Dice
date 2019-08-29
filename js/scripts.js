@@ -57,7 +57,7 @@ function rollAction(currentTurnPlayer, otherPlayer) {
 }
 
 function holdAction(currentTurnPlayer, otherPlayer, hold) {
-  currentTurnPlayer.rolledNumber=0;
+  currentTurnPlayer.rolledNumber = 0;
   if (hold === "hold") {
     currentTurnPlayer.hold();
     $("#turnScore").text(0);
@@ -79,34 +79,17 @@ function holdAction(currentTurnPlayer, otherPlayer, hold) {
   }
 }
 //Business Logic for Hard CPU
-function cpu(player1, computer) {
+function cpu(computer, player1) {
   var player1Score = player1.gameScore;
   var computerTurnScore = computer.turnScore;
   var computerTotalScore = computer.gameScore;
-  var turn = computer.playerTurn;
-  turn = true;
 
   if ((player1Score - computerTotalScore) > 30) {
-    while (computerTurnScore < 30 && turn) {
-      setTimeout(function() {
-        rollAction(player2, player1);
-      }, 1000);
-    }
-    holdAction(player2, player1);
+    cpuHard(computer, player1);
   } else if ((player1Score - computerTotalScore) < 0) {
-    while (computerTurnScore < 15 && turn) {
-      setTimeout(function() {
-        rollAction(player2, player1);
-      }, 1000);
-    }
-    holdAction(player2, player1);
+    cpuEasy(computer, player1);
   } else {
-    while (computerTurnScore < 20 && turn) {
-      setTimeout(function() {
-        rollAction(player2, player1);
-      }, 1000);
-    }
-    holdAction(player2, player1);
+    cpuMedium(computer, player1);
   }
 }
 
@@ -119,15 +102,28 @@ function cpuEasy(player2, player1) {
   holdAction(player2, player1);
 }
 
-function cpuHard(cpu, player1){
-  if(cpu.turnScore >30){
+function cpuMedium(cpu, player1) {
+  if (cpu.turnScore >= 20) {
     holdAction(cpu, player1, "hold");
-  }else if(cpu.rolledNumber === 1){
+  } else if (cpu.rolledNumber === 1) {
     holdAction(cpu, player1);
-  }else{
+  } else {
     rollAction(cpu, player1);
-    setTimeout(function(){
-        cpuHard(cpu, player1);
+    setTimeout(function() {
+      cpuMedium(cpu, player1);
+    }, 2000);
+  }
+}
+
+function cpuHard(cpu, player1) {
+  if (cpu.turnScore >= 30) {
+    holdAction(cpu, player1, "hold");
+  } else if (cpu.rolledNumber === 1) {
+    holdAction(cpu, player1);
+  } else {
+    rollAction(cpu, player1);
+    setTimeout(function() {
+      cpuHard(cpu, player1);
     }, 2000);
   }
 }
