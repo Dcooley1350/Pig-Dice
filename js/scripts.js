@@ -44,11 +44,15 @@ function rollAction(currentTurnPlayer, otherPlayer) {
   currentTurnPlayer.rolledNumber = randomNum;
   $(".game-player" + currentTurnPlayer.playerNumber + " img").attr("src", dicePic(randomNum));
   if (randomNum === 1) {
+    if(currentTurnPlayer.playerNumber ===1){
+      cpu(otherPlayer, currentTurnPlayer);
+    }
     currentTurnPlayer.playerTurn = false;
     currentTurnPlayer.turnScore = 0;
     $("#turnScore").html(0);
     $(".game-player" + currentTurnPlayer.playerNumber + " button").hide();
     $(".game-player" + otherPlayer.playerNumber + " button").show();
+
   } else {
     currentTurnPlayer.roll(randomNum);
     $("#turnScore").text(currentTurnPlayer.turnScore);
@@ -190,10 +194,9 @@ $(document).ready(function(event) {
     rollAction(player1, player2);
   });
   $("button[name=player1hold]").click(function(event) {
-    holdAction(player1, player2);
+    holdAction(player1, player2, "hold");
     if (player2.name === "cpu") {
-      cpuHard(player2, player1);
-      //cpuEasy(player2, player1)
+      cpu(player2, player1);
     }
 
   });
@@ -205,6 +208,6 @@ $(document).ready(function(event) {
   });
 
   $("button[name=player2hold]").click(function(event) {
-    holdAction(player2, player1);
+    holdAction(player2, player1, "hold");
   });
 });
