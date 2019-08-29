@@ -66,7 +66,7 @@ function holdAction(currentTurnPlayer, otherPlayer, hold) {
     currentTurnPlayer.hold();
     $("#turnScore").text(0);
     if (currentTurnPlayer.gameScore >= 100) {
-      $(".winner").html("<h1>The winner is" + currentTurnPlayer.name + "!</h1>");
+      $(".winner").html("<h1>The winner is " + currentTurnPlayer.name + "!</h1>");
       $(".winner").show();
       $("#turnScore").hide();
       alert("Nice Game! You Win!");
@@ -83,7 +83,10 @@ function holdAction(currentTurnPlayer, otherPlayer, hold) {
   }
 }
 //Business Logic for Hard CPU
-function cpu(computer, player1) {
+function cpu(computer, player1, currentTurnPlayer, otherPlayer,) {
+  $("#gamesscore-player" + currentTurnPlayer.playerNumber).text(currentTurnPlayer.gameScore);
+  $(".game-player" + currentTurnPlayer.playerNumber + " button").hide();
+  $(".game-player" + otherPlayer.playerNumber + " button").show();
   var player1Score = player1.gameScore;
   var computerTurnScore = computer.turnScore;
   var computerTotalScore = computer.gameScore;
@@ -101,7 +104,7 @@ function cpuEasy(player2, player1) {
   for (i = 0; i <= 1; i++) {
     setTimeout(function() {
       rollAction(player2, player1);
-    }, 1000);
+    }, 2000);
   }
   holdAction(player2, player1);
 }
