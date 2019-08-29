@@ -7,6 +7,7 @@ var Player = function() {
   this.gameWins = 0;
   this.playerNumber = 0;
   this.playerTurn = false;
+  this.rolledNumber = 0;
 }
 
 Player.prototype.addName = function(name) {
@@ -40,7 +41,7 @@ Player.prototype.win = function() {
 
 function rollAction(currentTurnPlayer, otherPlayer) {
   var randomNum = randomDiceNumber();
-  console.log(randomNum);
+  currentTurnPlayer.rolledNumber = randomNum;
   $(".game-player" + currentTurnPlayer.playerNumber + " img").attr("src", dicePic(randomNum));
   if (randomNum === 1) {
     currentTurnPlayer.playerTurn = false;
@@ -55,21 +56,29 @@ function rollAction(currentTurnPlayer, otherPlayer) {
   }
 }
 
-function holdAction(currentTurnPlayer, otherPlayer) {
-  currentTurnPlayer.hold();
-  $("#turnScore").text(0);
-  if (currentTurnPlayer.gameScore >= 100) {
-    $(".winner").html("<h1>The winner is" + currentTurnPlayer.name + "!</h1>");
-    $(".winner").show();
-    $("#turnScore").hide();
-    alert("Nice Game! You Win!");
+function holdAction(currentTurnPlayer, otherPlayer, hold) {
+  currentTurnPlayer.rolledNumber=0;
+  if (hold === "hold") {
+    currentTurnPlayer.hold();
+    $("#turnScore").text(0);
+    if (currentTurnPlayer.gameScore >= 100) {
+      $(".winner").html("<h1>The winner is" + currentTurnPlayer.name + "!</h1>");
+      $(".winner").show();
+      $("#turnScore").hide();
+      alert("Nice Game! You Win!");
+    } else {
+      $("#gamesscore-player" + currentTurnPlayer.playerNumber).text(currentTurnPlayer.gameScore);
+      $(".game-player" + currentTurnPlayer.playerNumber + " button").hide();
+      $(".game-player" + otherPlayer.playerNumber + " button").show();
+    }
   } else {
+    $("#turnScore").text(0);
     $("#gamesscore-player" + currentTurnPlayer.playerNumber).text(currentTurnPlayer.gameScore);
     $(".game-player" + currentTurnPlayer.playerNumber + " button").hide();
     $(".game-player" + otherPlayer.playerNumber + " button").show();
   }
 }
-
+//Business Logic for Hard CPU
 function cpu(player1, computer) {
   var player1Score = player1.gameScore;
   var computerTurnScore = computer.turnScore;
@@ -98,6 +107,28 @@ function cpu(player1, computer) {
       }, 1000);
     }
     holdAction(player2, player1);
+  }
+}
+
+function cpuEasy(player2, player1) {
+  for (i = 0; i <= 1; i++) {
+    setTimeout(function() {
+      rollAction(player2, player1);
+    }, 1000);
+  }
+  holdAction(player2, player1);
+}
+
+function cpuHard(cpu, player1){
+  if(cpu.turnScore >30){
+    holdAction(cpu, player1, "hold");
+  }else if(cpu.rolledNumber === 1){
+    holdAction(cpu, player1);
+  }else{
+    rollAction(cpu, player1);
+    setTimeout(function(){
+        cpuHard(cpu, player1);
+    }, 2000);
   }
 }
 
@@ -165,7 +196,8 @@ $(document).ready(function(event) {
   $("button[name=player1hold]").click(function(event) {
     holdAction(player1, player2);
     if (player2.name === "cpu") {
-      cpu(player2, player1);
+      cpuHard(player2, player1);
+      //cpuEasy(player2, player1)
     }
 
   });
