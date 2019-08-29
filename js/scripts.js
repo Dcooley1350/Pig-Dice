@@ -83,10 +83,8 @@ function holdAction(currentTurnPlayer, otherPlayer, hold) {
   }
 }
 //Business Logic for Hard CPU
-function cpu(computer, player1, currentTurnPlayer, otherPlayer,) {
-  $("#gamesscore-player" + currentTurnPlayer.playerNumber).text(currentTurnPlayer.gameScore);
-  $(".game-player" + currentTurnPlayer.playerNumber + " button").hide();
-  $(".game-player" + otherPlayer.playerNumber + " button").show();
+function cpu(computer, player1) {
+  $(".game-player2 button").hide();
   var player1Score = player1.gameScore;
   var computerTurnScore = computer.turnScore;
   var computerTotalScore = computer.gameScore;
